@@ -31,7 +31,7 @@
     // 货币代码对应的汇率
     // TRY(土耳其)
     const ExchangeRateDef = {
-    // 货币代码
+        // 货币代码
         TRY: {
             // 当前货币的1单位 兑换成 人民币 是多少
             rate: 0.36,
@@ -56,18 +56,18 @@
      * 获取汇率
      */
     function getExchangeRate() {
-    // 放弃了, 懒得使用, 直接用默认值
-    // $.ajax({
-    //     url: 'https://api.exchangeratesapi.io/latest',
-    //     type: 'GET',
-    //     data: {
-    //         base: newMoneyCode,
-    //         symbols: oldMoneyCode
-    //     },
-    //     success: function (result) {
-    //         console.log(result);
-    //     }
-    // });
+        // 放弃了, 懒得使用, 直接用默认值
+        // $.ajax({
+        //     url: 'https://api.exchangeratesapi.io/latest',
+        //     type: 'GET',
+        //     data: {
+        //         base: newMoneyCode,
+        //         symbols: oldMoneyCode
+        //     },
+        //     success: function (result) {
+        //         console.log(result);
+        //     }
+        // });
         return new Promise((resolve) => {
             const saveData = ExchangeRateDef;
             localStorage.setItem(locKeyObj.exchangeRateSaveKey, JSON.stringify(saveData));
@@ -81,7 +81,7 @@
         const rateTime = tryJson(localStorage.getItem(locKeyObj.exchangeRateSaveTimeKey));
         const nowTime = Date.now();
         let useRateObj = rateObj || ExchangeRateDef;
-        if ((rateObj && rateTime) && (rateTime + ExchangeRateMaxTime >= nowTime)) {
+        if (rateObj && rateTime && rateTime + ExchangeRateMaxTime >= nowTime) {
             // 缓存有效
             useRateObj = rateObj;
         } else {
@@ -182,23 +182,35 @@
         // 推荐 e
 
         // 优惠 s
-        document.querySelectorAll('.salepreviewwidgets_StoreSaleDiscountedPriceCtn_3GLeQ>.salepreviewwidgets_StoreOriginalPrice_1EKGZ').forEach((item) => {
-            replaceElPrices(item, unit2ExchangeRateObj);
-        });
-        document.querySelectorAll('.salepreviewwidgets_StoreSaleDiscountedPriceCtn_3GLeQ>.salepreviewwidgets_StoreSalePriceBox_Wh0L8').forEach((item) => {
-            replaceElPrices(item, unit2ExchangeRateObj);
-        });
+        document
+            .querySelectorAll(
+                '.salepreviewwidgets_StoreSaleDiscountedPriceCtn_3GLeQ>.salepreviewwidgets_StoreOriginalPrice_1EKGZ',
+            )
+            .forEach((item) => {
+                replaceElPrices(item, unit2ExchangeRateObj);
+            });
+        document
+            .querySelectorAll(
+                '.salepreviewwidgets_StoreSaleDiscountedPriceCtn_3GLeQ>.salepreviewwidgets_StoreSalePriceBox_Wh0L8',
+            )
+            .forEach((item) => {
+                replaceElPrices(item, unit2ExchangeRateObj);
+            });
         // 优惠 e
 
         // 搜索 s
-        document.querySelectorAll('.col.search_price.responsive_secondrow:not(.discounted)').forEach((item) => {
-            replaceElPrices(item, unit2ExchangeRateObj);
-        });
-        document.querySelectorAll('.col.search_price.discounted.responsive_secondrow').forEach((item) => {
-            replaceElPrices(item.querySelector('strike'), unit2ExchangeRateObj);
-            replaceElPrices(item, unit2ExchangeRateObj, ReplaceElPricesType.nodeValue, 3);
-        });
-    // 搜索 e
+        document
+            .querySelectorAll('.col.search_price.responsive_secondrow:not(.discounted)')
+            .forEach((item) => {
+                replaceElPrices(item, unit2ExchangeRateObj);
+            });
+        document
+            .querySelectorAll('.col.search_price.discounted.responsive_secondrow')
+            .forEach((item) => {
+                replaceElPrices(item.querySelector('strike'), unit2ExchangeRateObj);
+                replaceElPrices(item, unit2ExchangeRateObj, ReplaceElPricesType.nodeValue, 3);
+            });
+        // 搜索 e
     }
 
     const time = 1000 * 3;
@@ -211,4 +223,4 @@
             main();
         }, time);
     });
-}());
+})();
