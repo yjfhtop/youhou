@@ -118,7 +118,7 @@
             const useTxt = delStrLRNL(txt);
             const allArr = useTxt.split(' ');
             const unit = allArr[1];
-            const prices = parseFloat(allArr[0].replace(',', '.'));
+            const prices = parseFloat(allArr[0].replace(/(,|\.)/g, '')) / 100;
             return {
                 unit,
                 prices,
@@ -150,7 +150,7 @@
                 return;
             }
             const useObj = txtGetUnitAndPrices(useTxt);
-            if (useObj) {
+            if (useObj && unit2ExchangeRateObj[useObj.unit]) {
                 const oldTxt = useTxt;
                 const newPrices = useObj.prices * unit2ExchangeRateObj[useObj.unit].rate;
                 const targetStr = `${newPrices.toFixed(2)} ${RMBUnit} ${oldTxt}`;
